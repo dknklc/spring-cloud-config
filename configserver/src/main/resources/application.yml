@@ -1,0 +1,46 @@
+
+server:
+  port: 8071
+
+spring:
+  application:
+    name: "configserver"
+  profiles:
+    active: git
+    #active: native   # I am telling to spring cloud config server that I want to activate a native profile of spring cloud config server. Only use When using classpath or file system location for configuration like here.
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/dknklc/configurations.git"
+        #native:
+          #search-locations:"classpath:/config"       # I am telling to spring cloud config server where our properties are stored.
+          #search-locations: "file:///C://config      # for reading configuration from a file system location
+          timeout: 5
+          force-pull: true
+          clone-on-start: true
+          default-label: main
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+encrypt:
+  key: "45D81EC1EF61DF9AD8D3E5BB397F9"
+
